@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +18,7 @@ namespace API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))
+            if (!context.Request.Query.TryGetValue(APIKEYNAME, out var extractedApiKey))
             {
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("Api key was not provided. (Using ApiKeyMiddleware)");
